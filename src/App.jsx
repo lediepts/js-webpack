@@ -30,6 +30,7 @@ function App({ ext, elm }) {
   return (
     <div style={{ position: "relative" }}>
       <button
+      type="button"
         style={{
           position: "absolute",
           top: 4,
@@ -42,7 +43,8 @@ function App({ ext, elm }) {
           cursor: "pointer",
         }}
         disabled={!value}
-        onClick={async () => {
+        onClick={async (e) => {
+          e.preventDefault()
           if (value) {
             const val = await prettier.format(value, {
               parser: ext === "html" ? "html" : ext === "css" ? "css" : "babel",
