@@ -30,7 +30,10 @@
   "license": "ISC",
   "dependencies": {
     "@hookform/resolvers": "^3.0.1",
+    "@uiw/codemirror-extensions-basic-setup": "^4.23.3",
+    "@uiw/codemirror-theme-eclipse": "^4.23.3",
     "@uiw/codemirror-theme-monokai": "^4.22.2",
+    "@uiw/codemirror-theme-xcode": "^4.23.3",
     "react-hook-form": "^7.43.9",
     "yup": "^1.0.2"
   },
