@@ -20,9 +20,9 @@ const img = (
 );
 
 
-
-function App({ ext, elm }) {
+function App({ elm }) {
   const [value, setValue] = useState(elm.dataset.value);
+  const [type, setType] = useState(elm.dataset.extension);
   useEffect(() => {
     elm.dispatchEvent(
       new CustomEvent("change", {
@@ -30,9 +30,24 @@ function App({ ext, elm }) {
       })
     );
   });
-  async function formatCode(value) {
-    const val = await prettier.format(value, {
-      parser: ext === "html" ? "html" : ext === "css" ? "css" : "babel",
+  useEffect(() => {
+    if(!window.setEditorValue){
+      window.updateEditor = (target)=>{
+        const elm = document.querySelector(target)
+        if(elm){
+          setValue(elm.dataset.value)
+          setType(elm.dataset.extension)
+        }
+      }
+    }  
+    return () => {
+      delete(window.setEditorValue)
+    }
+  }, [])
+  
+  async function formatCode(v) {
+    const val = await prettier.format(v, {
+      parser: type === "html" ? "html" : type === "css" ? "css" : "babel",
       printWidth: Math.round(window.innerWidth / 10),
       plugins: [
         prettierPluginBabel,
@@ -70,7 +85,7 @@ function App({ ext, elm }) {
       >
         {img}
       </button>
-      {ext === "html" ? (
+      {type === "html" ? (
         <>
           <ReactCodeMirror
             value={value}
@@ -90,7 +105,7 @@ function App({ ext, elm }) {
             }}
           />
         </>
-      ) : ext === "css" ? (
+      ) : type === "css" ? (
         <>
           <ReactCodeMirror
             value={value}

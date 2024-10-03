@@ -16,7 +16,15 @@
 </head>
 
 <body>
-  <div class="code-editor" data-extension="html"></div>
+  <div class="code-editor" data-extension="css" data-value="html" id="id1"></div>
+  <button>click me!</button>
+  <script>
+    document.querySelector("button").onclick = () =>{
+      document.querySelector(".code-editor").dataset.value = new Date().toLocaleString()
+      document.querySelector(".code-editor").dataset.extension = "css"
+      window.updateEditor(".code-editor")
+    }
+  </script>
 </body>
 
 </html>
