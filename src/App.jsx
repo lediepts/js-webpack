@@ -1,7 +1,7 @@
 import ReactCodeMirror from "@uiw/react-codemirror";
 import { color } from "@uiw/codemirror-extensions-color";
 // import { xcodeLight } from '@uiw/codemirror-theme-xcode';
-import { eclipse } from '@uiw/codemirror-theme-eclipse';
+import { eclipse,eclipseInit } from '@uiw/codemirror-theme-eclipse';
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 import { javascript } from "@codemirror/lang-javascript";
@@ -11,6 +11,8 @@ import prettierPluginHtml from "prettier/parser-html";
 import prettierPluginBabel from "prettier/parser-babel";
 import prettierPluginEstree from "prettier/parser-espree";
 import prettierPluginCSS from "prettier/parser-postcss";
+import { createTheme } from '@uiw/codemirror-themes';
+import { tags as t } from '@lezer/highlight';
 
 const img = (
   <img
@@ -19,6 +21,37 @@ const img = (
   />
 );
 
+
+const myTheme = createTheme({
+  theme: 'light',
+  settings: {
+    background: '#ffffff',
+    backgroundImage: '',
+    foreground: '#75baff',
+    caret: '#5d00ff',
+    selection: '#036dd626',
+    selectionMatch: '#036dd626',
+    lineHighlight: '#8a91991a',
+    gutterBackground: '#fff',
+    gutterForeground: '#8a919966',
+  },
+  styles: [
+    { tag: t.comment, color: '#787b8099' },
+    { tag: t.variableName, color: '#0080ff' },
+    { tag: [t.string, t.special(t.brace)], color: '#5c6166' },
+    { tag: t.number, color: '#5c6166' },
+    { tag: t.bool, color: '#5c6166' },
+    { tag: t.null, color: '#5c6166' },
+    { tag: t.keyword, color: '#5c6166' },
+    { tag: t.operator, color: '#5c6166' },
+    { tag: t.className, color: '#5c6166' },
+    { tag: t.definition(t.typeName), color: '#5c6166' },
+    { tag: t.typeName, color: '#5c6166' },
+    { tag: t.angleBracket, color: '#5c6166' },
+    { tag: t.tagName, color: '#5c6166' },
+    { tag: t.attributeName, color: '#5c6166' },
+  ],
+});
 
 function App({ elm }) {
   const [value, setValue] = useState(elm.dataset.value);
@@ -89,11 +122,14 @@ function App({ elm }) {
         <>
           <ReactCodeMirror
             value={value}
-            theme={eclipse}
+            theme={eclipseInit({
+              settings:{
+                caret: '#000',
+              }
+            })}
             autoFocus
             className={elm.dataset.class}
             minHeight="100px"
-            maxHeight={elm.style.maxHeight || "500px"}
             extensions={[
               html({
                 autoCloseTags: true,
@@ -109,7 +145,11 @@ function App({ elm }) {
         <>
           <ReactCodeMirror
             value={value}
-            theme={eclipse}
+            theme={eclipseInit({
+              settings:{
+                caret: '#000',
+              }
+            })}
             autoFocus
             className={elm.dataset.class}
             minHeight="100px"
@@ -125,7 +165,11 @@ function App({ elm }) {
         <>
           <ReactCodeMirror
             value={value}
-            theme={eclipse}
+            theme={eclipseInit({
+              settings:{
+                caret: '#000',
+              }
+            })}
             autoFocus
             className={elm.dataset.class}
             minHeight="100px"
